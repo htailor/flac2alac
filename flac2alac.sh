@@ -1,27 +1,39 @@
 #!/bin/bash
 
+# 1.1 - Added check to see if ffmpeg binary is installed
+#     - Improved usage comments
+
 ### definitions ################################################################
 
-FLAC2ALAC_VERSION="1.0"
+FLAC2ALAC_VERSION="1.1"
 SOURCES=("$@")
 FLAC_EXTENSION=".flac"
 ALAC_EXTENSION=".m4a"
 
+
 ### functions ##################################################################
 
-function print_usage() {
+function print_usage(){
     echo "flac2alac version: ${FLAC2ALAC_VERSION}"
-    echo "Usage: $(basename "$0") [ filename | directory]";
     cat <<'EOF'
+Usage:
 
-Usage: ./flac2alac.sh [filename|directory]
+    ./flac2alac.sh [filename|directory]
 
 Description:
-    Utility for converting flac audio files to Apple Lossless (ALAC)
+
+    Utility for converting flac audio files to Apple Lossless (ALAC) using FFmpeg.
+    Must have FFmpeg installed.
 
 Examples:
+
+    Convert a single flac file:
     ./flac2alac.sh song.flac
+
+    Convert multiple flac files:
     ./flac2alac.sh track_1.flac track_2.flac track_3.flac
+
+    Convert a folder of flac files:
     ./flac2alac.sh album
 EOF
 }
@@ -42,8 +54,16 @@ function flac2alac() {
     fi
 }
 
+
 ### main #######################################################################
 
+# check if ffmpeg is installed
+if ! type ffmpeg > /dev/null 2>&1; then
+	echo "FFmpeg not found. Must have FFmpeg installed."
+	exit 1;
+fi
+
+# check if any args were passed on the command line
 if [[ ${#SOURCES[@]} == 0 ]]; then
     print_usage
     exit 1
