@@ -17,7 +17,7 @@ function print_usage() {
 Usage: ./flac2alac.sh [filename|directory]
 
 Description:
-    Utility for coverting flac audio files to Apple Lossless (ALAC)
+    Utility for converting flac audio files to Apple Lossless (ALAC)
 
 Examples:
     ./flac2alac.sh song.flac
