@@ -1,5 +1,7 @@
 #!/bin/bash
 
+### version history ############################################################
+
 # 1.1 - Added check to see if ffmpeg binary is installed
 #     - Improved usage comments
 
@@ -9,6 +11,8 @@ FLAC2ALAC_VERSION="1.1"
 SOURCES=("$@")
 FLAC_EXTENSION=".flac"
 ALAC_EXTENSION=".m4a"
+
+LOG_FILE="flac2alac.log"
 
 
 ### functions ##################################################################
@@ -48,7 +52,7 @@ function flac2alac() {
     fi
 
     if [[ $_FLAC_FILE == *.flac ]]; then
-        ffmpeg -i "$_FLAC_FILE" -y -acodec alac "$_ALAC_FILE" >> ffmpeg.log 2>&1 &
+        ffmpeg -i "$_FLAC_FILE" -y -acodec alac "$_ALAC_FILE" >> $LOG_FILE 2>&1 &
     else
         echo "$_FLAC_FILE invalid file"
     fi
