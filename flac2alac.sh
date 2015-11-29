@@ -9,9 +9,9 @@
 
 FLAC2ALAC_VERSION="1.1"
 SOURCES=("$@")
-FLAC_EXTENSION=".flac"
-ALAC_EXTENSION=".m4a"
-
+FLAC_EXTENSION="flac"
+ALAC_EXTENSION="m4a"
+ACODEC="alac"
 LOG_FILE="flac2alac.log"
 
 
@@ -51,7 +51,7 @@ function flac2alac() {
         return
     fi
 
-    if [[ $_FLAC_FILE == *.flac ]]; then
+    if [[ $_FLAC_FILE == *.${FLAC_EXTENSION} ]]; then
         ffmpeg -i "$_FLAC_FILE" -y -acodec alac "$_ALAC_FILE" >> $LOG_FILE 2>&1 &
     else
         echo "$_FLAC_FILE invalid file"
@@ -76,7 +76,7 @@ fi
 for SOURCE in ${SOURCES[*]};
 do
     if [[ -d $SOURCE ]]; then
-        FLAC_FILES=$(find $SOURCE -name "*.flac")
+        FLAC_FILES=$(find $SOURCE -name "*.${FLAC_EXTENSION}")
         for FLAC_FILE in ${FLAC_FILES[*]};
         do
             flac2alac "$FLAC_FILE"
