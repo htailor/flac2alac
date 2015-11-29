@@ -52,7 +52,7 @@ function flac2alac() {
     fi
 
     if [[ $_FLAC_FILE == *.${FLAC_EXTENSION} ]]; then
-        ffmpeg -i "$_FLAC_FILE" -y -acodec alac "$_ALAC_FILE" >> $LOG_FILE 2>&1 &
+        ffmpeg -i "$_FLAC_FILE" -y -acodec $ACODEC "$_ALAC_FILE" >> $LOG_FILE 2>&1 &
     else
         echo "$_FLAC_FILE invalid file"
     fi
